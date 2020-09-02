@@ -1,18 +1,28 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <img alt="Vue logo" src="../assets/todo-icon.png" class="logo">
+    <TodoList />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import TodoList from '@/components/TodoList.vue'
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld
+    TodoList
   }
 }
 </script>
+
+<style lang="scss">
+.logo {
+  display: block;
+  margin: 20px auto;
+  height: 50px;
+}
+</style>
+
+Install sass by running - npm install sass-loader node-sass --save
