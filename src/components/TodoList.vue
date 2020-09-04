@@ -15,19 +15,15 @@
         </transition-group>
 
         <div class="extra-container">
-            <div><label><input type="checkbox" :checked="!anyRemaining" @change="checkAllTodos"> mark all</label></div>
-            <div>{{ remaining }} Item left</div>
+            <todo-check-all :anyRemaining="anyRemaining"></todo-check-all>
+            <todo-item-remaining :remainingItem="remaining"></todo-item-remaining>
         </div>
         
         <div class="extra-container">
-            <div>
-                <button :class="{ active: filter == 'all' }" @click="filter = 'all' " >All</button>
-                <button :class="{ active: filter == 'active' }" @click="filter = 'active' " >Active</button>
-                <button :class="{ active: filter == 'completed' }" @click="filter = 'completed' " >Completed</button>
-            </div>
+            <todo-filtered></todo-filtered>
             <div>
                 <transition name="fade">
-                    <button v-if="ShowClearCompletedButton" @click="clearCompleted" class="clear-complete">Clear Completed</button>
+                    <todo-clear-completed :showClearCompletedButton="showClearCompletedButton" ></todo-clear-completed>
                 </transition>
             </div>
         </div>
@@ -36,12 +32,20 @@
 
 <script>
 import TodoItem from './TodoItem.vue'
+import TodoItemRemaining from './TodoItemRemaining.vue'
+import TodoCheckAll from './TodoCheckAll.vue'
+import TodoFiltered from './TodoFiltered.vue'
+import TodoClearCompleted from './TodoClearCompleted.vue'
 
 export default {
     name: 'TodoList',
 
     components: {
-        TodoItem
+        TodoItem,
+        TodoItemRemaining,
+        TodoCheckAll,
+        TodoFiltered,
+        TodoClearCompleted
     },
 
     data() {
@@ -76,6 +80,17 @@ export default {
     created() {
         eventBus.$on('removeTodoItem', (index) => this.removeTodo(index))
         eventBus.$on('finishedEdit', (data) => this.updateTodosData(data))
+        eventBus.$on('allChecked', (checked) => this.checkAllTodos(checked))
+        eventBus.$on('filterChanged', (filter) => this.filter = filter)
+        eventBus.$on('clearCompletedTodos', () => this.clearCompleted())
+    }, 
+
+    beforeDestroy() {
+        eventBus.$off('removeTodoItem', (index) => this.removeTodo(index))
+        eventBus.$off('finishedEdit', (data) => this.updateTodosData(data))
+        eventBus.$off('allChecked', (checked) => this.checkAllTodos(checked))
+        eventBus.$off('filterChanged', (filter) => this.filter = filter)
+        eventBus.$off('clearCompletedTodos', () => this.clearCompleted())
     },
 
     computed: {
@@ -100,7 +115,7 @@ export default {
             return this.todos   // this is for the default case
         },
 
-    ShowClearCompletedButton() {
+    showClearCompletedButton() {
         return this.todos.filter(todo => todo.completed).length > 0 // this will show once there presence of a marked completed item
         }
     },
@@ -141,7 +156,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import url("https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css");
 
 .todo-input, .edit-input {
