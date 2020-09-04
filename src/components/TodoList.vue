@@ -9,8 +9,6 @@
             <TodoItem class="todo-item" 
             v-for="(todo, index) in todosFiltered" :key="todo.id" 
             :todo="todo" :index="index"
-            @removeTodoItem="removeTodo"
-            @finishedEdit="updateTodosData"
             :checkAll="!anyRemaining"
             >
             </TodoItem>
@@ -73,6 +71,11 @@ export default {
                 }
             ]
         }
+    },
+
+    created() {
+        eventBus.$on('removeTodoItem', (index) => this.removeTodo(index))
+        eventBus.$on('finishedEdit', (data) => this.updateTodosData(data))
     },
 
     computed: {

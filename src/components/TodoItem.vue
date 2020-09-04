@@ -72,7 +72,7 @@ export default {
 
     methods: {
         removeTodo(index) {
-            this.$emit('removeTodoItem', index) // first argument is the event variable holding the value the we want to pass, the second in the value we are passing which is the index of the todo item
+            eventBus.$emit('removeTodoItem', index) // first argument is the event variable holding the value the we want to pass, the second in the value we are passing which is the index of the todo item
         },
 
         editMode() {
@@ -85,7 +85,7 @@ export default {
                 this.title = this.beforeEditCache
             }
             this.editing = false
-            this.$emit('finishedEdit', {
+            eventBus.$emit('finishedEdit', {
                 'index': this.index,
                 'todo': {
                     'id': this.id,
