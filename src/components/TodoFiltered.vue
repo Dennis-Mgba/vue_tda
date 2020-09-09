@@ -9,16 +9,16 @@
 <script>
 export default {
     name: 'todo-filtered-buttons',
-    data() {
-        return {
-            'filter': 'all' // by default filter is all
+
+    computed: {
+        filter() {
+            return this.$store.state.filter
         }
     },
 
     methods: {
         changeFilter(filter) {
-            this.filter = filter
-            eventBus.$emit('filterChanged', filter)
+            this.$store.state.filter = filter
         }
     }
 }

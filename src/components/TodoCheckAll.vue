@@ -7,16 +7,15 @@
 <script>
 export default {
     name: 'todo-check-all',
-    props: {
-        anyRemaining: {
-            type: Boolean,
-            required: true
+    computed: {
+        anyRemaining() {
+            return this.$store.getters.anyRemaining
         }
     },
 
     methods: {
         checkAll() {
-            eventBus.$emit('allChecked', this.anyRemaining)
+            this.$store.state.todos.forEach( (todo) => todo.completed = event.target.checked)
         }
     }
 }

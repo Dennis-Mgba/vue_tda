@@ -15,7 +15,7 @@
         </transition-group>
 
         <div class="extra-container">
-            <todo-check-all :anyRemaining="anyRemaining"></todo-check-all>
+            <todo-check-all></todo-check-all>
             <todo-item-remaining :remainingItem="remaining"></todo-item-remaining>
         </div>
         
@@ -23,7 +23,7 @@
             <todo-filtered></todo-filtered>
             <div>
                 <transition name="fade">
-                    <todo-clear-completed :showClearCompletedButton="showClearCompletedButton" ></todo-clear-completed>
+                    <todo-clear-completed></todo-clear-completed>
                 </transition>
             </div>
         </div>
@@ -53,56 +53,20 @@ export default {
             newTodo: '',
             manualId: 4,
             beforeEditCache: '',
-            filter: 'all',
-            todos: [
-                {
-                    'id': 1,
-                    'title': 'Finish learning vue from a tutorial',
-                    'completed': false,
-                    'editing': false
-                },
-                 {
-                    'id': 2,
-                    'title': 'Practice out what I learned',
-                    'completed': false,
-                    'editing': false
-                },
-                 {
-                    'id': 3,
-                    'title': 'Try out building an api of todos',
-                    'completed': false,
-                    'editing': false
-                }
-            ]
         }
     },
 
-    created() {
-        eventBus.$on('removeTodoItem', (index) => this.removeTodo(index))
-        eventBus.$on('finishedEdit', (data) => this.updateTodosData(data))
-        eventBus.$on('allChecked', (checked) => this.checkAllTodos(checked))
-        eventBus.$on('filterChanged', (filter) => this.filter = filter)
-        eventBus.$on('clearCompletedTodos', () => this.clearCompleted())
-    }, 
-
-    beforeDestroy() {
-        eventBus.$off('removeTodoItem', (index) => this.removeTodo(index))
-        eventBus.$off('finishedEdit', (data) => this.updateTodosData(data))
-        eventBus.$off('allChecked', (checked) => this.checkAllTodos(checked))
-        eventBus.$off('filterChanged', (filter) => this.filter = filter)
-        eventBus.$off('clearCompletedTodos', () => this.clearCompleted())
-    },
-
     computed: {
-        remaining() {
-            return this.todos.filter(todo => !todo.completed).length
+        remaining() { 
+            return this.$store.getters.remaining
         },
 
         anyRemaining() {
-            return this.remaining != 0
+            return this.$store.getters.anyRemaining
         },
 
         todosFiltered() {
+<<<<<<< HEAD
             if (this.filter == 'all') {
                 return this.todos
             } else if (this.filter == 'active') {
@@ -113,10 +77,13 @@ export default {
             }
 
             return this.todos   // by default return all todos
+=======
+            return this.$store.getters.todosFiltered                
+>>>>>>> Impletented data state management with vuex store, used getter property to modify the data state directly
         },
 
-    showClearCompletedButton() {
-        return this.todos.filter(todo => todo.completed).length > 0 // this will show once there presence of a marked completed item
+        showClearCompletedButton() {
+            return this.$store.getters.showClearCompletedButton
         }
     },
 
@@ -126,31 +93,14 @@ export default {
                 return
             }
 
-            this.todos.push({
+            this.$store.state.todos.push({
                 id: this.manualId,
                 title: this.newTodo,
                 completed: false
             });
 
             this.newTodo = '';
-            this.manualId++
-        },
-
-        removeTodo(index) {
-            this.todos.splice(index, 1)
-        },
-
-        checkAllTodos() {
-            this.todos.forEach( (todo) => todo.completed = event.target.checked)
-        },
-
-        clearCompleted() {
-            // grab the todos array and set it to all the items that is not complteted
-            this.todos = this.todos.filter(todo => !todo.completed)
-        },
-
-        updateTodosData(data) {  // data received from the event
-            this.todos.splice(data.index, 1, data.todo)
+            this.manualId++;
         }
     }
 }

@@ -7,13 +7,13 @@
                 <p>{{ title }}</p>
             </div>
 
-                <input v-else type="text" class="edit-input" 
-                v-model="title" 
-                @blur="doneEdit"
-                @keyup.enter="doneEdit"
-                @keyup.esc="cancelEditMode"
-                v-focus
-                >
+            <input v-else type="text" class="edit-input" 
+            v-model="title" 
+            @blur="doneEdit"
+            @keyup.enter="doneEdit"
+            @keyup.esc="cancelEditMode"
+            v-focus
+            >
 
         </div>
         <div class="remove-item" @click="removeTodo(index)">
@@ -71,8 +71,9 @@ export default {
     },
 
     methods: {
-        removeTodo(index) {
-            eventBus.$emit('removeTodoItem', index) // first argument is the event variable holding the value the we want to pass, the second in the value we are passing which is the index of the todo item
+        removeTodo(id) {
+            const index = this.$store.state.todos.findIndex(item => item.id == id) + 1;
+            this.$store.state.todos.splice(index, 1)
         },
 
         editMode() {
@@ -80,19 +81,18 @@ export default {
             this.editing = true
         },
 
-        doneEdit() {
+        doneEdit(id) {
             if (this.title.trim() == '') {  
                 this.title = this.beforeEditCache
             }
             this.editing = false
-            eventBus.$emit('finishedEdit', {
-                'index': this.index,
-                'todo': {
-                    'id': this.id,
-                    'title': this.title,
-                    'completed': this.completed,
-                    'editing': this.editing
-                }
+
+           const index = this.$store.state.todos.findIndex(item => item.id == this.id);
+            this.$store.state.todos.splice(index, 1, {
+                'id': this.id,
+                'title': this.title,
+                'completed': this.completed,
+                'editing': this.editing
             })
         },
 
