@@ -66,20 +66,7 @@ export default {
         },
 
         todosFiltered() {
-<<<<<<< HEAD
-            if (this.filter == 'all') {
-                return this.todos
-            } else if (this.filter == 'active') {
-                // active are the todos tha are not yet completed ye?
-                return this.todos.filter(todo => !todo.completed)
-            } else if (this.filter == 'completed') {
-                return this.todos.filter(todo => todo.completed)
-            }
-
-            return this.todos   // by default return all todos
-=======
-            return this.$store.getters.todosFiltered                
->>>>>>> Impletented data state management with vuex store, used getter property to modify the data state directly
+            return this.$store.getters.todosFiltered
         },
 
         showClearCompletedButton() {
