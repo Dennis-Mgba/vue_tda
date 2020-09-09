@@ -112,7 +112,7 @@ export default {
                 return this.todos.filter(todo => todo.completed)
             }
 
-            return this.todos   // this is for the default case
+            return this.todos   // by default return all todos
         },
 
     showClearCompletedButton() {
