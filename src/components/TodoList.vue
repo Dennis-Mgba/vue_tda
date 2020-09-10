@@ -52,13 +52,7 @@ export default {
         return {
             newTodo: '',
             manualId: 4,
-            beforeEditCache: '',
-            // newTodo: {
-            //     id: this.manualId,
-            //     title: '',
-            //     completed: false,
-            //     editing: false
-            // }
+            beforeEditCache: ''
         }
     },
 
