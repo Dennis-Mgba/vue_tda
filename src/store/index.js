@@ -81,7 +81,7 @@ export default new Vuex.Store({
         },
 
         checkAllTodos(state, checked) {
-            state.todos.forEach( (todo) => todo.completed = event.target.checked)
+            state.todos.forEach( (todo) => todo.completed = checked)
         
         },
 
