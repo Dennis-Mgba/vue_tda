@@ -7,10 +7,9 @@
 <script>
 export default {
     name: 'todo-item-remaining',
-    props: {
-        remainingItem: {
-            type: Number,
-            required: true
+    computed: {
+        remainingItem() {
+            return this.$store.getters.remaining
         }
     }
 }
