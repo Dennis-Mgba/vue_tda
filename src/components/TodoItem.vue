@@ -72,8 +72,7 @@ export default {
 
     methods: {
         removeTodo(id) {
-            const index = this.$store.state.todos.findIndex(item => item.id == id) + 1;
-            this.$store.state.todos.splice(index, 1)
+            this.$store.commit('deleteTodoItem', id)
         },
 
         editMode() {
@@ -87,8 +86,7 @@ export default {
             }
             this.editing = false
 
-           const index = this.$store.state.todos.findIndex(item => item.id == this.id);
-            this.$store.state.todos.splice(index, 1, {
+            this.$store.commit('updateTodoItem', {
                 'id': this.id,
                 'title': this.title,
                 'completed': this.completed,

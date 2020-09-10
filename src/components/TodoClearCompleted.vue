@@ -13,10 +13,10 @@ export default {
         }
     },
 
-    methods: {
-        clearCompleted() {
-            this.$store.state.todos = this.$store.state.todos.filter(todo => !todo.completed)
-        }
+methods: {
+    clearCompleted() {
+        this.$store.commit('clearCompleted')
     }
+}
 }
 </script>

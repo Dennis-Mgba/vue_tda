@@ -53,6 +53,12 @@ export default {
             newTodo: '',
             manualId: 4,
             beforeEditCache: '',
+            // newTodo: {
+            //     id: this.manualId,
+            //     title: '',
+            //     completed: false,
+            //     editing: false
+            // }
         }
     },
 
@@ -80,11 +86,18 @@ export default {
                 return
             }
 
-            this.$store.state.todos.push({
+            // the commit takes in two parameters - 1. a name 2. the payload
+            // this.$store.commit('addTodo', newTodo);
+            this.$store.commit('addTodo', {
                 id: this.manualId,
                 title: this.newTodo,
-                completed: false
             });
+
+            // this.$store.state.todos.push({
+            //     id: this.manualId,
+            //     title: this.newTodo,
+            //     completed: false
+            // });
 
             this.newTodo = '';
             this.manualId++;
