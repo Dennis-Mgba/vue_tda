@@ -94,6 +94,25 @@ export default new Vuex.Store({
         }
     },
     actions: {
+        addTodo(context, todo) {
+            context.commit('addTodo', todo)
+        },
+
+        deleteTodoItem(context, id) {
+            setTimeout(() => {
+                context.commit('deleteTodoItem', id)
+            }, 1000)            
+        },
+
+        updateTodoItem(context, todo) {
+            context.commit('updateTodoItem', todo)
+        },
+
+        clearCompleted(context) {
+            setTimeout(() => {
+                context.commit('clearCompleted')
+            }, 1000)
+        }
     },
     modules: {
     }

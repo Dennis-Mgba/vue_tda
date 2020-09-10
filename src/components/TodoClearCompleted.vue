@@ -13,10 +13,10 @@ export default {
         }
     },
 
-methods: {
-    clearCompleted() {
-        this.$store.commit('clearCompleted')
+    methods: {
+        clearCompleted() {
+            this.$store.dispatch('clearCompleted')
+        }
     }
-}
 }
 </script>

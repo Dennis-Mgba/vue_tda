@@ -87,17 +87,10 @@ export default {
             }
 
             // the commit takes in two parameters - 1. a name 2. the payload
-            // this.$store.commit('addTodo', newTodo);
-            this.$store.commit('addTodo', {
+            this.$store.dispatch('addTodo', {
                 id: this.manualId,
                 title: this.newTodo,
-            });
-
-            // this.$store.state.todos.push({
-            //     id: this.manualId,
-            //     title: this.newTodo,
-            //     completed: false
-            // });
+            })
 
             this.newTodo = '';
             this.manualId++;
